@@ -30,6 +30,7 @@ CORS(app)
 @app.route('/drinks')
 def drinks_list():
     drinks_query = Drink.query.order_by(Drink.id).all()
+    # Loop through all the items in drink query using list comprehension
     drinks = [drink.short() for drink in drinks_query]
 
     # If there are no drinks in the list, 
@@ -86,7 +87,10 @@ def add_drink(payload):
 
         title = body.get('title', None)
         # We serialize the recipe request object and turn it into a json string
-        # so it can be processed into the database... 
+        # so it can be processed into the database as a string rather than a list of dictionary... 
+
+        # Here I also allowed the request to be `None` 
+        # in case the client might decide to not to add a recipe
         recipe = json.dumps(body.get('recipe', None))
 
         new_added_drink = Drink(title=title, recipe=recipe)
@@ -95,7 +99,7 @@ def add_drink(payload):
 
         return jsonify({
             "success": True, 
-            "drinks": [new_added_drink.long()]
+            "drinks": [new_added_drink.long()] # drink an array containing only the newly created drink
         })
     except Exception:
         abort(400) # Aborts a 400 bad request error if request is not processed
@@ -127,7 +131,10 @@ def edit_drink(payload, drink_id):
 
     title = body.get('title', None)
     # We serialize the recipe request object and turn it into a json string
-    # so it can be processed into the database... 
+    # so it can be processed into the database as a string rather than a list of dictionary... 
+
+    # Here I also allowed the request to be `None` 
+    # in case the client might decide to not to add a recipe 
     recipe = json.dumps(body.get('recipe', None))
 
     drink = Drink.query.filter(Drink.id == drink_id).one_or_none()
@@ -147,10 +154,6 @@ def edit_drink(payload, drink_id):
 
 
     
-    
-
-
-
 
 
 '''
