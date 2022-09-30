@@ -183,7 +183,7 @@ def requires_auth(permission=''):
                 payload = verify_decode_jwt(token)
                 check_permissions(permission, payload) 
             # Here, any error raised from token, payload or check_permissions 
-            # will be raised here and cause the requests to be aborted 
+            # will be raised here and will cause the requests to be aborted 
             except AuthError as e:
                 abort(e.status_code)
 
