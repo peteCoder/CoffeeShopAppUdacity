@@ -176,12 +176,12 @@ def delete_drink(payload, drink_id):
         drink = Drink.query.filter(Drink.id == drink_id).one_or_none()
 
         if drink is None:
-            abort(404)
+            abort(404) # Aborts a 404 not found error if drink query is not found
 
         drink.delete()
 
     except:
-        abort(422)
+        abort(422) # Aborts a 422 unprocessible error if request is not processed
 
     return jsonify({
         "success": True, 
@@ -230,7 +230,7 @@ def unprocessable(error):
     return jsonify({
         "success": False,
         "error": 422,
-        "message": "unprocessable"
+        "message": "unprocessible"
     }), 422
 
 @app.errorhandler(401)
