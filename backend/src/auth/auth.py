@@ -17,6 +17,9 @@ API_AUDIENCE = 'coffeeapp'
 AuthError Exception
 A standardized way to communicate auth failure modes
 '''
+
+# Derived most of the boilerplate codes from the UDACITY Classroom Tutorials
+
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
